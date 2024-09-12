@@ -1,0 +1,12 @@
+fn puts(str: *u8): u32
+
+fn main(): u32 {
+	var x: u32 = 0;
+
+	while (x < 100) {
+		x = x + 1;
+		puts("Hello, World".ptr);
+	}
+
+	ret x;
+}

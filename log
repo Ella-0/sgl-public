@@ -1,0 +1,68 @@
+   Compiling sgl v0.1.0 (/home/ella/Documents/Programming/sgl)
+error[E0423]: expected value, found enum `State`
+  --> src/lex.rs:46:24
+   |
+46 |         println!("{}", State);
+   |                        ^^^^^
+   |
+note: the enum is defined here
+  --> src/lex.rs:4:1
+   |
+4  | / enum State {
+5  | |     Start,
+6  | |     End,
+7  | |
+...  |
+26 | |     CommentInStar,
+27 | | }
+   | |_^
+help: you might have meant to use one of the following enum variants
+   |
+46 |         println!("{}", lex::State::Start);
+   |                        ~~~~~~~~~~~~~~~~~
+46 |         println!("{}", lex::State::End);
+   |                        ~~~~~~~~~~~~~~~
+46 |         println!("{}", lex::State::CharStart);
+   |                        ~~~~~~~~~~~~~~~~~~~~~
+46 |         println!("{}", lex::State::Zero);
+   |                        ~~~~~~~~~~~~~~~~
+     and 3 other candidates
+help: the following enum variants are available
+   |
+46 |         println!("{}", (lex::State::Punct(/* fields */)));
+   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+46 |         println!("{}", (lex::State::Word(/* fields */)));
+   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+46 |         println!("{}", (lex::State::CharEnd(/* fields */)));
+   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+46 |         println!("{}", (lex::State::InStr(/* fields */)));
+   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     and 6 other candidates
+help: a local variable with a similar name exists
+   |
+46 |         println!("{}", state);
+   |                        ~~~~~
+
+warning: unused import: `LLVMTypeKind`
+ --> src/code.rs:1:37
+  |
+1 | use llvm_sys::{core::*, prelude::*, LLVMTypeKind};
+  |                                     ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::collections::HashMap`
+ --> src/typer.rs:1:5
+  |
+1 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `spv::*`
+  --> src/main.rs:16:5
+   |
+16 | use spv::*;
+   |     ^^^^^^
+
+For more information about this error, try `rustc --explain E0423`.
+warning: `sgl` (bin "sgl") generated 3 warnings
+error: could not compile `sgl` due to previous error; 3 warnings emitted

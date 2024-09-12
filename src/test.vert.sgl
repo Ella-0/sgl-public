@@ -1,0 +1,7 @@
+in[0] in_pos: vec2
+out[0] out_pos: vec2
+
+fn main() {
+    sgl_vert_pos = <vec4>(in_pos.x, in_pos.y, 0, 1);
+    out_pos = in_pos;
+}

@@ -1,0 +1,6 @@
+fn puts(s: *u8): u32
+
+fn main(): u32 {
+    puts("Hello, World!".ptr);
+    ret 0u32;
+}

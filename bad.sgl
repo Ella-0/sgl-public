@@ -1,0 +1,2 @@
+fn main(): u32 {
+ret 0; random; }

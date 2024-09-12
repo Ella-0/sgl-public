@@ -1,0 +1,1130 @@
+ty str: *u8
+ty void: u8
+
+fn puts(x: str): u32
+
+fn write(fd: u32, buf: *u8, count: u64): i64
+
+
+/* Vulkan decls */
+ty VkApplicationInfo: {
+	stype: u32,
+	next: *u8,
+	app_name: *u8,
+	app_ver: u32,
+	engine_name: *u8,
+	engine_ver: u32,
+	api_ver: u32
+}
+
+ty VkInstanceCreateInfo: {
+	stype: u32,
+	next: *u8,
+	flags: u32,
+	app_info: *VkApplicationInfo,
+	layer_count: u32,
+	layer_names: **u8,
+	ext_count: u32,
+	ext_names: **u8
+}
+
+ty VkExtent2D: {
+	width: u32,
+	height: u32
+}
+
+ty VkExtent3D: {
+	width: u32,
+	height: u32,
+	depth: u32
+}
+
+ty VkQueueFamilyProperties: {
+	flags: u32,
+	count: u32,
+	timestamp_valid: u32,
+	transfer_granularity: VkExtent3D
+}
+
+ty VkDeviceQueueCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	queue_index: u32,
+	queue_count: u32,
+	priorities: *f32
+}
+
+ty VkDeviceCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	queue_count: u32,
+	queue_infos: *VkDeviceQueueCreateInfo,
+	layer_count: u32,
+	layer_names: **u8,
+	ext_count: u32,
+	ext_names: **u8,
+	features: *void /* TODO */
+}
+
+ty VkSemaphoreCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32
+}
+
+ty VkInstance: *void
+ty VkPhysicalDevice: *void
+ty VkDevice: *void
+ty VkQueue: *void
+ty VkSurfaceKHR: *void
+ty VkSemaphore: *void
+ty VkSwapchainKHR: *void
+ty VkImage: *void
+ty VkRenderPass: *void
+ty VkShaderModule: *void
+ty VkPipeline: *void
+ty VkImageView: *void
+ty VkFramebuffer: *void
+
+ty VkSwapchainCreateInfoKHR: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	surface: VkSurfaceKHR,
+	min_image_count: u32,
+	format: u32,
+	colour_space: u32,
+	image_extent: VkExtent2D,
+	array_layers: u32,
+	usage: u32,
+	sharing_mode: u32,
+	queue_count: u32,
+	queue_indicies: *u32,
+	transform: u32,
+	composite_alpha: u32,
+	present_mode: u32,
+	clipped: u32,
+	old: VkSwapchainKHR
+}
+
+ty VkComponentMapping: {
+    r: u32,
+    g: u32,
+    b: u32,
+    a: u32
+}
+
+ty VkImageSubresourceRange: {
+    aspect_flags: u32,
+    base_mip: u32,
+    level_count: u32,
+    base_array_layer: u32,
+    layer_count: u32
+}
+
+ty VkImageViewCreateInfo: {
+    stype: u32,
+    next: *void,
+    flags: u32,
+    image: VkImage,
+    type: u32,
+    format: u32,
+    components: VkComponentMapping,
+    subresource_range: VkImageSubresourceRange
+}
+
+ty VkCommandPoolCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	queue_family_index: u32
+}
+
+ty VkCommandPool: *void
+
+ty VkCommandBufferAllocateInfo: {
+	stype: u32,
+	next: *void,
+	pool: VkCommandPool,
+	level: u32,
+	count: u32
+}
+
+ty VkCommandBuffer: *void
+
+ty VkClearColorValue: {
+	r: f32,
+	g: f32,
+	b: f32,
+	a: f32
+}
+
+// ty VkImageSubresourceRange: {
+// 	aspect: u32,
+// 	base_mip: u32,
+// 	level_count: u32,
+// 	base_layer: u32,
+// 	layer_count: u32
+// }
+
+ty VkImageSubresourceLayers: {
+	aspect: u32,
+	mip: u32,
+	base_layer: u32,
+	layer_count: u32
+}
+
+ty VkImageMemoryBarrier: {
+	stype: u32,
+	next: *void,
+	src_mask: u32,
+	dst_mask: u32,
+	old_layer: u32,
+	new_layer: u32,
+	src_queue_idx: u32,
+	dst_queue_idx: u32,
+	image: VkImage,
+	subresource_range: VkImageSubresourceRange
+}
+
+ty VkOffset2D: {
+	x: i32,
+	y: i32
+}
+
+ty VkOffset3D: {
+	x: i32,
+	y: i32,
+	z: i32
+}
+
+ty VkExtent3D: {
+	w: u32,
+	h: u32,
+	d: u32
+}
+
+ty VkBufferImageCopy: {
+	offset: u64,
+	rowl: u32,
+	height: u32,
+	subl: VkImageSubresourceLayers,
+	i_off: VkOffset3D,
+	i_ext: VkExtent3D
+}
+
+ty VkCommandBufferBeginInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	inherit: *void
+}
+
+ty VkSubmitInfo: {
+	stype: u32,
+	next: *void,
+	wait_sem_count: u32,
+	wait_sems: *VkSemaphore,
+	wait_stg_mask: *u32,
+	cmd_buffer_count: u32,
+	cmd_buffers: *VkCommandBuffer,
+	sig_sem_count: u32,
+	sig_sems: *VkSemaphore
+}
+
+ty VkPresentInfoKHR: {
+	stype: u32,
+	next: *void,
+	wait_sem_count: u32,
+	wait_sems: *VkSemaphore,
+	swap_count: u32,
+	swapchains: *VkSwapchainKHR,
+	image_idxs: *u32,
+	results: *u32
+}
+
+ty VkAttachmentDescription: {
+	flags: u32,
+	format: u32,
+	samples: u32,
+	load_op: u32,
+	store_op: u32,
+	stencil_load_op: u32,
+	stencil_store_op: u32,
+	initial_layout: u32,
+	final_layout: u32
+}
+
+ty VkAttachmentReference: {
+	attachment: u32,
+	layout: u32
+}
+
+ty VkSubpassDescription: {
+	flags: u32,
+	bind_point: u32,
+	input_attachment_count: u32,
+	input_attachments: *VkAttachmentReference,
+	colour_attachment_count: u32,
+	colour_attachments: *VkAttachmentReference,
+	resolve_attachments: *VkAttachmentReference,
+	depth_attachments: *VkAttachmentReference,
+	preserve_attachment_count: u32,
+	preserve_attachments: *u32
+}
+
+ty VkRenderPassCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	attachment_count: u32,
+	attachments: *VkAttachmentDescription,
+	subpass_count: u32,
+	subpass_descs: *VkSubpassDescription,
+	dep_count: u32,
+	deps: *void /* Ignore for now */
+}
+
+ty VkShaderModuleCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	size: u64,
+	code: *u32
+}
+
+ty VkVertexInputStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	binding_desc_count: u32,
+	binding_descs: *void,
+	attr_desc_count: u32,
+	attr_descs: *void
+}
+
+ty VkPipelineInputAssemblyStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	topology: u32,
+	restart_enable: u32
+}
+
+ty VkViewport: {
+	x: f32,
+	y: f32,
+	width: f32,
+	height: f32,
+	min_depth: f32,
+	max_depth: f32
+}
+
+ty VkRect2D: {
+	offset: VkOffset2D,
+	extent: VkExtent2D
+}
+
+ty VkPipelineViewportStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	viewport_count: u32,
+	viewports: *VkViewport,
+	scissor_count: u32,
+	scissors: *VkRect2D
+}
+
+ty VkPipelineRasterizationStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	depth_clamp_enable: u32,
+	raster_discard_enable: u32,
+	polygon_mode: u32,
+	cull_mode: u32,
+	front_face: u32,
+	depth_bias_enable: u32,
+	depth_bias_constant_factor: f32,
+	depth_bias_clamp: f32,
+	depth_bias_slope: f32,
+	line_width: f32
+}
+
+ty VkPipelineColorBlendAttachmentState: {
+	blend_enable: u32,
+	src_factor: u32,
+	dst_factor: u32,
+	blend_op: u32,
+	src_a_factor: u32,
+	dst_a_factor: u32,
+	a_blend_op: u32,
+	write_mask: u32
+}
+
+ty VkPipelineColorBlendStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	logic_op_enable: u32,
+	vk_logic_op: u32,
+	attachment_count: u32,
+	attachments: *VkPipelineColorBlendAttachmentState,
+	blend_constants_r: f32,
+	blend_constants_g: f32,
+	blend_constants_b: f32,
+	blend_constants_a: f32
+}
+
+ty VkPipelineLayout: *void
+
+ty VkPipelineLayoutCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	set_layout_count: u32,
+	set_layouts: *void, /* TODO: descriptor sets */
+	push_constant_range_count: u32,
+	push_constant_ranges: *void
+}
+
+ty VkPipelineShaderStageCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	stage: u32,
+	moudle: VkShaderModule,
+	name: *u8,
+	special: *void /* TODO */
+}
+
+ty VkPipelineVertexInputStateCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	binding_desc_count: u32,
+	binding_descs: *void,
+	attr_desc_count: u32,
+	attr_descs: *void
+}
+
+ty VkGraphicsPipelineCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	stage_count: u32,
+	stages: *VkPipelineShaderStageCreateInfo,
+	input_state: *VkPipelineVertexInputStateCreateInfo,
+	input_asm_state: *VkPipelineInputAssemblyStateCreateInfo,
+	tess_state: *void,
+	viewport_state: *VkPipelineViewportStateCreateInfo,
+	raster_state: *VkPipelineRasterizationStateCreateInfo,
+	multisample_state: *void,
+	depth_stencil: *void,
+	colour_blend_state: *VkPipelineColorBlendStateCreateInfo,
+	dyn_state: *void,
+	layout: VkPipelineLayout,
+	render_pass: VkRenderPass,
+	subpass: u32,
+	pipeline: VkPipeline,
+	pipeline_idx: u32
+}
+
+// ty VkAttachmentDescription: {
+// 	flags: u32,
+// 	format: u32,
+// 	samples: u32,
+// 	load_op: u32,
+// 	store_op: u32,
+// 	stencil_load_op: u32,
+// 	stencil_store_op: u32,
+// 	initial_layout: u32,
+// 	final_layout: u32
+// }
+
+ty VkFramebufferCreateInfo: {
+	stype: u32,
+	next: *void,
+	flags: u32,
+	render_pass: VkRenderPass,
+	attachment_count: u32,
+	attachments: *VkImageView,
+	width: u32,
+	hieght: u32,
+	layers: u32
+}
+
+fn vkCreateInstance(createinfo: *VkInstanceCreateInfo, allocator: *void, instance: *VkInstance): u32
+fn vkEnumeratePhysicalDevices(instance: VkInstance, count: *u32, physical_devices: *VkPhysicalDevice): u32
+fn vkCreateDevice(physical_device: VkPhysicalDevice, createinfo: *VkDeviceCreateInfo, allocator: *void, device: *VkDevice): u32
+fn vkGetDeviceQueue(device: VkDevice, family_index: u32, queue_index: u32, queue: *VkQueue)
+
+fn vkCreateSemaphore(device: VkDevice, info: *VkSemaphoreCreateInfo, allocator: *void, semaphore: *VkSemaphore): u32
+fn vkCreateSwapchainKHR(device: VkDevice, info: *VkSwapchainCreateInfoKHR, allocator: *void, swapchain: *VkSwapchainKHR): u32
+fn vkGetSwapchainImagesKHR(device: VkDevice, swapchain: VkSwapchainKHR, count: *u32, images: *VkImage): u32
+
+fn vkCreateCommandPool(device: VkDevice, info: *VkCommandPoolCreateInfo, allocator: *void, pool: *VkCommandPool): u32
+fn vkAllocateCommandBuffers(device: VkDevice, info: *VkCommandBufferAllocateInfo, cmdbuffers: *VkCommandBuffer): u32
+
+fn vkBeginCommandBuffer(cmd_buffer: VkCommandBuffer, begin_info: *VkCommandBufferBeginInfo): u32
+fn vkEndCommandBuffer(cmd_buffer: VkCommandBuffer): u32
+fn vkCmdPipelineBarrier(
+	cmd_buffer: VkCommandBuffer,
+	src_mask: u32,
+	dst_mask: u32,
+	deps: u32,
+	barier_count: u32,
+	barriers: *void,
+	buf_bar_count: u32,
+	buf_barriers: *void,
+	im_bar_count: u32,
+	im_bars: *VkImageMemoryBarrier
+): void
+
+fn vkCmdClearColorImage(
+	cmd_buffer: VkCommandBuffer,
+	image: VkImage,
+	layout: u32,
+	colour: *VkClearColorValue,
+	range_count: u32,
+	range: *VkImageSubresourceRange
+): void
+
+fn vkAcquireNextImageKHR(device: VkDevice, swapchain: VkSwapchainKHR, timeout: u64, semaphore: VkSemaphore, fence: *void, idx: *u32): u32
+
+fn vkQueueSubmit(queue: VkQueue, count: u32, submits: *VkSubmitInfo, fence: *void): u32
+fn vkQueuePresentKHR(queue: VkQueue, infos: *VkPresentInfoKHR): u32
+fn vkQueueWaitIdle(queue: VkQueue): u32
+
+fn vkCreateRenderPass(device: VkDevice, info: *VkRenderPassCreateInfo, alloc: *void, rp: *VkRenderPass): u32
+
+fn vkCreateShaderModule(device: VkDevice, info: *VkShaderModuleCreateInfo, alloc: *void, mod: *VkShaderModule): u32
+
+fn vkCreatePipelineLayout(device: VkDevice, info: *VkPipelineLayoutCreateInfo, alloc: *void, layout: *VkPipelineLayout): u32
+fn vkCreateImageView(device: VkDevice, info: *VkImageViewCreateInfo, alloc: *void, image_view: *VkImageView): u32
+fn vkCreateFramebuffer(device: VkDevice, info: *VkFramebufferCreateInfo, alloc: *void, image_view: *VkFramebuffer): u32
+
+fn vkCreateGraphicsPipelines(device: VkDevice, cache: *void, count: u32, infos: *VkGraphicsPipelineCreateInfo, alloc: *void, pipeline: *VkPipeline): u32
+
+ty VkRenderPassBeginInfo: {
+	stype: u32,
+	next: *void,
+	render_pass: VkRenderPass,
+	framebuffer: VkFramebuffer,
+	area: VkRect2D,
+	clear_count: u32,
+	clear_values: *VkClearColorValue
+}
+
+fn vkCmdBeginRenderPass(cmd_buffer: VkCommandBuffer, begin_info: *VkRenderPassBeginInfo, contents: u32): u32
+fn vkCmdEndRenderPass(cmd_buffer: VkCommandBuffer): u32
+fn vkCmdBindPipeline(cmd_buffer: VkCommandBuffer, bind_point: u32, pipeline: VkPipeline): u32
+fn vkCmdDraw(cmd_buffer: VkCommandBuffer, vertex_count: u32, instance_count: u32, first_v: u32, first_i: u32): u32
+
+fn vkGetPhysicalDeviceSurfaceSupportKHR(pdevice: VkPhysicalDevice, queue_family_index: u32, surface: VkSurfaceKHR, supported: *u32): u32
+
+/* GLFW Decls */
+ty GLFWwindow: void
+fn glfwInit()
+fn glfwWindowHint(hint: u32, val: u32)
+fn glfwCreateWindow(width: u32, height: u32, title: *u8, mon: *void, share: *GLFWwindow): *GLFWwindow
+fn glfwPollEvents()
+fn glfwWindowShouldClose(window: *GLFWwindow): bool
+fn glfwCreateWindowSurface(instance: VkInstance, window: *GLFWwindow, allocator: *void, surface: *VkSurfaceKHR): u32
+
+fn printf(ptr: *u8, x: u32)
+
+fn main(): u32 {
+	/* Shaders */
+	var vert_spv: []u32 = shader vert {
+		fn main() {
+			sgl_vert_pos = <vec4>(0, 0, 0, 1);
+			sgl_vert_point_size = 100;
+		}
+	};
+
+	var frag_spv: []u32 = shader frag {
+    		out[0] out_col: vec4
+
+    		fn main() {
+        		out_col = <vec4>(1, 1, 1, 1);
+    		}
+	};
+
+	var app_info: VkApplicationInfo = {VkApplicationInfo}(
+		0,
+		null,
+		"hello".ptr,
+		0,
+		"engine".ptr,
+		0,
+		0
+	);
+
+	var createinfo: VkInstanceCreateInfo = {VkInstanceCreateInfo}(
+		1,
+		null,
+		0,
+		&app_info,
+		1,
+		[*u8]("VK_LAYER_KHRONOS_validation".ptr).ptr,
+		2,
+		[*u8]("VK_KHR_surface".ptr, "VK_KHR_wayland_surface".ptr).ptr
+	);
+
+	var instance: VkInstance = null;
+
+	vkCreateInstance(&createinfo, null, &instance);
+
+	var physical_device_count: u32 = 1;
+	var physical_device: VkPhysicalDevice = null;
+
+	vkEnumeratePhysicalDevices(instance, &physical_device_count, &physical_device);
+
+	var priority: f32 = 1;
+
+	/* hard coded to make things easier
+	 * we should really be following the spec here and checking all families
+	 * to see if they support transfer or graphics. On most cards it is common
+	 * for the first queue family to support both graphics and transfer though
+	 * some cards often have families that only do transfer.
+	 */
+	var queue_family_index: u32 = 0;
+	var device_queue_createinfo: VkDeviceQueueCreateInfo = {VkDeviceQueueCreateInfo}(
+		2,
+		null,
+		0,
+		0,
+		1,
+		&priority
+	);
+
+	var device_exts: []*u8 = [*u8](
+    		"VK_KHR_swapchain".ptr
+	);
+
+	var device_create_info: VkDeviceCreateInfo = {VkDeviceCreateInfo}(
+		3,
+		null,
+		0,
+		1,
+		&device_queue_createinfo,
+		0,
+		null,
+		1,
+		device_exts.ptr,
+		null
+	);
+
+	var device: VkDevice = null;
+	vkCreateDevice(physical_device, &device_create_info, null, &device);
+
+	var queue: VkQueue = null;
+	vkGetDeviceQueue(device, queue_family_index, 0, &queue);
+
+	/* GLFW init */
+	var GLFW_NO_API: u32 = 0;
+	var GLFW_TRUE: u32 = 1;
+	var GLFW_VISIBLE: u32 = 0x20004;
+	var GLFW_CLIENT_API: u32 = 139265;
+	glfwInit();
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	var window: *GLFWwindow = glfwCreateWindow(640, 480, "Hello, World!".ptr, null, null);
+
+	var surface: VkSurfaceKHR = null;
+	glfwCreateWindowSurface(instance, window, null, &surface);
+	var supported: u32 = 0;
+	vkGetPhysicalDeviceSurfaceSupportKHR(physical_device, queue_family_index, surface, &supported);
+
+	var semaphore_createinfo: VkSemaphoreCreateInfo = {VkSemaphoreCreateInfo}(
+    		9, /* VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO */
+    		null,
+    		0
+	);
+
+	var image_available_sem: VkSemaphore = null;
+	var render_finished_sem: VkSemaphore = null;
+
+	vkCreateSemaphore(device, &semaphore_createinfo, null, &image_available_sem);
+	vkCreateSemaphore(device, &semaphore_createinfo, null, &render_finished_sem);
+
+	var swapchain_extent: VkExtent2D = {VkExtent2D}(640, 480);
+
+	var swapchain_create_info: VkSwapchainCreateInfoKHR = {VkSwapchainCreateInfoKHR}(
+		1000001000, /* VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR */
+		null,
+		0,
+		surface,
+		4, /* desired images, should not be hard coded */
+		50, /* VK_FORMAT_B8G8R8A8_SRGB */
+		0, /* colour space */
+		swapchain_extent,
+		1,
+		18, /* usage: VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT */
+		0, /* VK_SHARING_MODE_EXCLUSIVE */
+		0,
+		null,
+		1, /* VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR */
+		1, /* VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR */
+		2, /* VK_PRESENT_MODE_FIFO_KHR */
+		0,
+		null
+	);
+
+	var swapchain: VkSwapchainKHR = null;
+
+	vkCreateSwapchainKHR(device, &swapchain_create_info, null, &swapchain);
+
+	var created_image_count: u32 = 2;
+	var images: []VkImage = [VkImage](null, null, null, null);
+
+	vkGetSwapchainImagesKHR(device, swapchain, &created_image_count, images.ptr);
+
+	printf("created image count: %u\n".ptr, created_image_count);
+
+	var subresource_range: VkImageSubresourceRange = {VkImageSubresourceRange}(
+		1,
+		0,
+		1,
+		0,
+		1
+	);
+
+	var component_mapping: VkComponentMapping = {VkComponentMapping}(
+		0, /* VK_COMPONENT_SWIZZLE_IDENTITY */
+		0, /* VK_COMPONENT_SWIZZLE_IDENTITY */
+		0, /* VK_COMPONENT_SWIZZLE_IDENTITY */
+		0 /* VK_COMPONENT_SWIZZLE_IDENTITY */
+	);
+
+	var idx: u32 = 0;
+
+	var image_view_create_info_0: VkImageViewCreateInfo = {VkImageViewCreateInfo}(
+		15, /* VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO */
+		null,
+		0,
+		images.ptr[idx], /* image */
+		1, /* VK_IMAGE_VIEW_TYPE_2D */
+		50, /* VK_FORMAT_B8G8R8A8_SRGB */
+		component_mapping,
+		subresource_range
+	);
+
+	var idx: u32 = 1;
+
+	var image_view_create_info_1: VkImageViewCreateInfo = {VkImageViewCreateInfo}(
+		15, /* VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO */
+		null,
+		0,
+		images.ptr[idx], /* image */
+		1, /* VK_IMAGE_VIEW_TYPE_2D */
+		50, /* VK_FORMAT_B8G8R8A8_SRGB */
+		component_mapping,
+		subresource_range
+	);
+
+	var image_view_0: VkImageView = null;
+	var image_view_1: VkImageView = null;
+
+	vkCreateImageView(device, &image_view_create_info_0, null, &image_view_0);
+	vkCreateImageView(device, &image_view_create_info_1, null, &image_view_1);
+
+	var image_views: []VkImageView = [VkImageView](image_view_0, image_view_1);
+
+	var cmd_pool_create_info: VkCommandPoolCreateInfo = {VkCommandPoolCreateInfo}(
+		39,
+		null,
+		2,
+		queue_family_index
+	);
+
+	var pool: VkCommandPool = null;
+	vkCreateCommandPool(device, &cmd_pool_create_info, null, &pool);
+
+	var cmd_buffer_allocate_info: VkCommandBufferAllocateInfo = {VkCommandBufferAllocateInfo}(
+		40,
+		null,
+		pool,
+		0,
+		1
+	);
+
+	var cmd_buffer: VkCommandBuffer = null;
+	vkAllocateCommandBuffers(device, &cmd_buffer_allocate_info, &cmd_buffer);
+
+	var clear_colour: VkClearColorValue = {VkClearColorValue}(0, 1, 1, 1);
+	var subresource_layer: VkImageSubresourceLayers = {VkImageSubresourceLayers}(
+		1,
+		0,
+		0,
+		1
+	);
+
+	var region: VkBufferImageCopy = {VkBufferImageCopy}(
+		0,
+		0,
+		0,
+		subresource_layer,
+		{VkOffset3D}(128, 128, 0),
+		{Extent3D}(128, 128, 1)
+	);
+
+	var begin_info: VkCommandBufferBeginInfo = {VkCommandBufferBeginInfo}(
+		42,
+		null,
+		1,
+		null
+	);
+
+	var attachment_description: VkAttachmentDescription = {VkAttachmentDescription}(
+		0,
+		50, /* VK_FORMAT_B8G8R8A8_SRGB */
+		1,
+		1, /* VK_ATTACHMENT_LOAD_OP_CLEAR */
+		0, /* VK_ATTACHMENT_STORE_OP_STORE */
+		1, /* VK_ATTACHMENT_LOAD_OP_DONT_CARE */
+		1, /* VK_ATTACHMENT_STORE_OP_DONT_CARE */
+		0, /* VK_IMAGE_LAYOUT_UNDEFINED_KHR */
+		1000001002 /* VK_IMAGE_LAYOUT_PRESENT_SRC_KHR */
+	);
+
+	var attachment_ref: VkAttachmentReference = {VkAttachmentReference}(
+		0,
+		2 /* VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL */
+	);
+
+	var subpass_desc: VkSubpassDescription = {VkSubpassDescription}(
+		0,
+		0, /* VK_PIPELINE_BIND_POINT_GRAPHICS */
+		0,
+		null,
+		1,
+		&attachment_ref,
+		null,
+		null,
+		0,
+		null
+	);
+
+	var renderp_info: VkRenderPassCreateInfo = {VkRenderPassCreateInfo}(
+		38, /* VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO */
+		null,
+		0,
+		1,
+		&attachment_description,
+		1,
+		&subpass_desc,
+		0,
+		null
+	);
+
+	var renderp: VkRenderPass = null;
+
+	vkCreateRenderPass(device, &renderp_info, null, &renderp);
+
+	var vert_info: VkShaderModuleCreateInfo = {VkShaderModuleCreateInfo}(
+		16, /* VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO */
+		null,
+		0,
+		vert_spv.len * 4,
+		vert_spv.ptr
+	);
+
+	var vert_mod: VkShaderModule = null;
+	vkCreateShaderModule(device, &vert_info, null, &vert_mod);
+
+	var frag_info: VkShaderModuleCreateInfo = {VkShaderModuleCreateInfo}(
+		16, /* VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO */
+		null,
+		0,
+		frag_spv.len * 4,
+		frag_spv.ptr
+	);
+
+	var frag_mod: VkShaderModule = null;
+	vkCreateShaderModule(device, &frag_info, null, &frag_mod);
+
+	var shader_stages: []VkPipelineShaderStageCreateInfo = [VkPipelineShaderStageCreateInfo](
+		{VkPipelineShaderStageCreateInfo}(
+			18, /* VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO */
+			null,
+			0,
+			1, /* vertex */
+			vert_mod,
+			"main".ptr,
+			null
+		),
+		{VkPipelineShaderStageCreateInfo}(
+			18, /* VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO */
+			null,
+			0,
+			16, /* fragment */
+			frag_mod,
+			"main".ptr,
+			null
+		)
+	);
+
+
+	var vertex_input_state_info: VkVertexInputStateCreateInfo = {VkVertexInputStateCreateInfo}(
+		19, /* VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO */
+		null,
+		0,
+		0,
+		null,
+		0,
+		null
+	);
+
+	var pipeline_input_assembly: VkPipelineInputAssemblyStateCreateInfo = {VkPipelineInputAssemblyStateCreateInfo}(
+		20, /* VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO */
+		null,
+		0,
+		0, /* VK_PRIMITIVE_TOPOLOGY_POINT_LIST */
+		0 /* false */
+	);
+
+	var pipeline_input_state: VkPipelineVertexInputStateCreateInfo = {VkPipelineVertexInputStateCreateInfo}(
+		19, /* VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO */
+		null,
+		0,
+		0,
+		null,
+		0,
+		null
+	);
+
+	var viewport: VkViewport = {VkViewport}(
+		0,
+		0,
+		640,
+		480,
+		0,
+		1
+	);
+
+	var scissor: VkRect2D = {VkRect2D}(
+		{VkOffset2D}(0, 0),
+		{VkExtent2D}(640, 480)
+	);
+
+	var pipeline_viewport_state: VkPipelineViewportStateCreateInfo = {VkPipelineViewportStateCreateInfo}(
+		22, /* VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO */
+		null,
+		0,
+		1,
+		&viewport,
+		1,
+		&scissor
+	);
+
+	var pipeline_raster_state: VkPipelineRasterizationStateCreateInfo = {VkPipelineRasterizationStateCreateInfo}(
+		23, /* VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO */
+		null,
+		0,
+		0,
+		1,
+		0, /* VK_POLYGON_MODE_FILL */
+		0, /* VK_CULL_MODE_NONE */
+		0, /* VK_FRONT_FACE_COUNTER_CLOCKWISE */
+		0,
+		0,
+		0,
+		0,
+		1
+	);
+
+	var colour_blend_attachment: VkPipelineColorBlendAttachmentState = {VkPipelineColorBlendAttachmentState}(
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		15
+	);
+
+	var colour_blend_state: VkPipelineColorBlendStateCreateInfo = {VkPipelineColorBlendStateCreateInfo}(
+		26, /* VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO */
+		null,
+		0,
+		0,
+		0,
+		1,
+		&colour_blend_attachment,
+		0,
+		0,
+		0,
+		0
+	);
+
+	var pipeline_layout_create_info: VkPipelineLayoutCreateInfo = {VkPipelineLayoutCreateInfo}(
+		30, /* VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO */
+		null,
+		0,
+		0,
+		null,
+		0,
+		null
+	);
+
+	var pipeline_layout: VkPipelineLayout = null;
+	vkCreatePipelineLayout(device, &pipeline_layout_create_info, null, &pipeline_layout);
+
+	var graphics_pipeline_create_info: VkGraphicsPipelineCreateInfo = {VkGraphicsPipelineCreateInfo}(
+		28, /* VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO */
+		null,
+		0,
+		2 /* shader_stages.len */,
+		shader_stages.ptr,
+		&pipeline_input_state,
+		&pipeline_input_assembly,
+		null,
+		&pipeline_viewport_state,
+		&pipeline_raster_state,
+		null,
+		null,
+		&colour_blend_state,
+		null,
+		pipeline_layout,
+		renderp,
+		0,
+		null,
+		0
+	);
+
+	var pipeline: VkPipeline = null;
+
+	vkCreateGraphicsPipelines(device, null, 1, &graphics_pipeline_create_info, null, &pipeline);
+
+	var frame_buffer_create_info: VkFramebufferCreateInfo = {VkFramebufferCreateInfo}(
+		37, /* VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO */
+		null,
+		0,
+		renderp,
+		1,
+		&image_views.ptr[0],
+		640,
+		480,
+		1
+	);
+
+	var frame_buffer_0: VkFramebuffer = null;
+
+        vkCreateFramebuffer(device, &frame_buffer_create_info, null, &frame_buffer_0);
+
+	var frame_buffer_create_info: VkFramebufferCreateInfo = {VkFramebufferCreateInfo}(
+		37, /* VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO */
+		null,
+		0,
+		renderp,
+		1,
+		&image_views.ptr[1],
+		640,
+		480,
+		1
+	);
+
+	var frame_buffer_1: VkFramebuffer = null;
+
+        vkCreateFramebuffer(device, &frame_buffer_create_info, null, &frame_buffer_1);
+
+        var frame_buffers: []VkFramebuffer = [VkFramebuffer](frame_buffer_0, frame_buffer_1);
+
+	var image_idx: u32 = 0;
+	while (!glfwWindowShouldClose(window)) {
+		printf("idx: %d\n".ptr, image_idx);
+
+		var barrier_present_to_clear: VkImageMemoryBarrier = {VkImageMemoryBarrier}(
+			45,
+			null,
+			0x20,
+			0x40,
+			0,
+			7,
+			queue_family_index,
+			queue_family_index,
+			images.ptr[image_idx],
+			subresource_range
+		);
+
+		var barrier_clear_to_present: VkImageMemoryBarrier = {VkImageMemoryBarrier}(
+			45,
+			null,
+			0x20,
+			0x40,
+			0,
+			1000001002,
+			queue_family_index,
+			queue_family_index,
+			images.ptr[image_idx],
+			subresource_range
+		);
+
+
+		var r_begin_info: VkRenderPassBeginInfo = {VkRenderPassBeginInfo}(
+			43, /* VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO */
+			null,
+			renderp,
+			frame_buffers.ptr[image_idx],
+			{VkRect2D}(
+				{VkOffset2D}(0, 0),
+				{VkExtent2D}(640, 480)
+			),
+			1,
+			&clear_colour
+		);
+
+		vkBeginCommandBuffer(cmd_buffer, &begin_info);
+		// vkCmdPipelineBarrier(cmd_buffer, 0x1000, 0x1000, 0, 0, null, 0, null, 1, &barrier_present_to_clear);
+		// vkCmdClearColorImage(cmd_buffer, images.ptr[image_idx], 7, &clear_colour, 1, &subresource_range);
+		// vkCmdPipelineBarrier(cmd_buffer, 0x1000, 0x2000, 0, 0, null, 0, null, 1, &barrier_clear_to_present);
+
+                vkCmdBeginRenderPass(cmd_buffer, &r_begin_info, 0);
+		vkCmdBindPipeline(cmd_buffer, 0, pipeline);
+		vkCmdDraw(cmd_buffer, 1, 1, 0, 0);
+		vkCmdEndRenderPass(cmd_buffer);
+		vkEndCommandBuffer(cmd_buffer);
+
+		vkAcquireNextImageKHR(device, swapchain, 0xffffffffffffffff, image_available_sem, null, &image_idx);
+
+		var msk: u32 = 4096;
+
+		var submit_info: VkSubmitInfo = {VkSubmitInfo}(
+			4,
+			null,
+			1,
+			&image_available_sem,
+			&msk,
+			1,
+			&cmd_buffer,
+			1,
+			&render_finished_sem
+		);
+
+		vkQueueSubmit(queue, 1, &submit_info, null);
+
+		image_idx = image_idx % 2;
+		var present_info: VkPresentInfoKHR = {VkPresentInfoKHR}(
+			1000001001,
+			null,
+			1,
+			&render_finished_sem,
+			1,
+			&swapchain,
+			&image_idx,
+			null
+		);
+
+		vkQueuePresentKHR(queue, &present_info);
+		vkQueueWaitIdle(queue);
+
+		glfwPollEvents();
+	}
+
+	var x: u32 = 0;
+	ret x;
+}

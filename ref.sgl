@@ -1,0 +1,27 @@
+ty VKExtent2D: {
+	width: u32, /* aka .0 */
+	height: u32, /* aka .1 */
+}
+
+fn puts(*u8): i32
+
+fn main(argc: i32, argv: **u8): i32 {
+	var x: VKExtent2D = {VKExtent2D}(
+		.width=640,
+		.height=480
+	);
+
+	var y: []u32 = [[]u32]( /* perhaps not */
+		[1]=1,
+		[0]=0
+	);
+
+	var z: []u32 = [[]u32](
+		0,
+		1
+	);
+
+	var w: *u8 = "Hello, World!";
+
+	puts("Hello, World!"); /* string literalls are just null terminated *u8 s */
+}
